@@ -218,4 +218,3 @@ def main():
     updater.idle()
 
 
-main()
