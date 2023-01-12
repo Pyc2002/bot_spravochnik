@@ -88,9 +88,9 @@ def Phone_num(update, _):
     return -> int (переход на следующий шаг по списку)
     """
     user = update.message.from_user
-    constants.PHONE_NUM = update.message.text
     if checks.Check_num(update) == False: return STEP_PHONE_NUM
     if checks.Check_phone(update) == False: return STEP_PHONE_NUM
+    constants.PHONE_NUM = update.message.text
     logger.info("Пользователь %s добавил номер телефона: %s", user.first_name, update.message.text)
     update.message.reply_text('Введите группу или отправь /skip, если без группы.\n' 'Команда /cancel, чтобы прекратить разговор.')
     return STEP_GROUP
@@ -146,6 +146,7 @@ def Search(update, _):
     """
     user = update.message.from_user
     if checks.Check_name(update) == False: return SEARCH
+    # if checks.Check_none(update) == False: return SEARCH
     logger.info("Пользователь %s искал: %s", user.first_name, update.message.text)
     update.message.reply_text(f'{controller.Search_contact(update)} \n''Для перехода в меню отправьте /start')
     return ConversationHandler.END 
@@ -158,6 +159,7 @@ def Delete(update, _):
     user = update.message.from_user
     logger.info("Пользователь %s удалил контакт: %s", user.first_name, update.message.text)
     if checks.Check_name(update) == False: return DELETE
+    # if checks.Check_none(update) == False: return DELETE
     update.message.reply_text(f'{controller.Search_contact(update)} \n''Введите номер телефона контакта для удаления\n')
     return DELETE_SECOND
    
@@ -168,6 +170,7 @@ def Delete_second(update, _):
     return -> завершение ConversationHandler
     """
     if checks.Check_num(update) == False: return DELETE_SECOND
+    # if checks.Check_phone_del(update) == False: return DELETE_SECOND
     controller.Delete_contact(update)
     update.message.reply_text('Контакт удален \n''Для перехода в меню отправьте /start')
     return ConversationHandler.END  
