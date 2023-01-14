@@ -1,22 +1,23 @@
 import csv
 from constants import DATA_BASE
 
-# def Check_none(update):
-#     """
-#     Testing input data for None
+def Check_none(update):
+    """
+    Testing input data for None
 
-#     args -> str
-#     return -> bool
-#     """
-#     data = update.message.text
-#     with open(DATA_BASE, newline='', encoding='utf-8') as csvfile:
-#         reader = csv.DictReader(csvfile, delimiter='|')
-#         for item in reader:
-#             if data.title() not in item.values(): 
-#                 update.message.reply_text('Ошибка! Такого нет в базе \n'
-#                 'Повторите ввод \n')
-#                 return False
-#     return True
+    args -> str
+    return -> bool
+    """
+    data = update.message.text
+    with open(DATA_BASE, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter='|')
+        for item in reader:
+            if data.title() in item.values(): 
+                return False
+    
+    update.message.reply_text('Ошибка! Такого нет в базе \n'
+    'Повторите ввод \n')
+    return True
             
                 
     
@@ -67,18 +68,19 @@ def Check_phone(update):
     return True
 
 
-# def Check_phone_del(update):
-#     """Testing input numer is correct
-#     args -> str
-#     retuns -> bool
-#     """
-#     data = update.message.text
-#     with open(DATA_BASE, newline='', encoding='utf-8') as csvfile:
-#         reader = csv.DictReader(csvfile, delimiter='|')
-#         for item in reader:
-#             if data not in item['Телефон']:
-#                 update.message.reply_text('Такого номера телефона нет справочнике \n'
-#                 'Попробуйте ввести снова\n\n' 'Команда /cancel, чтобы прекратить разговор.')
-#                 return False   
-#     return True
-
+def Check_phone_del(update):
+    """Testing input numer is correct
+    args -> str
+    retuns -> bool
+    """
+    
+    data = update.message.text
+    with open(DATA_BASE, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter='|')
+        for item in reader:
+            if data in item['Телефон']: 
+                return False
+        
+    update.message.reply_text('Такого номера телефона нет справочнике \n'
+    'Попробуйте ввести снова\n\n' 'Команда /cancel, чтобы прекратить разговор.')  
+    return True

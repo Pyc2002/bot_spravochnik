@@ -1,10 +1,8 @@
-
-import logger
 import csv
 import os
 import constants
 from constants import DATA_BASE
-import re
+
 
 
 
@@ -28,12 +26,13 @@ def add_contact():
     returns -> None
     """
     fieldnames()
-    new_contact = {'Имя': constants.NAME.title(), 'Фамилия': constants.LAST_NAME.title(), 'Телефон': constants.PHONE_NUM, 'Группа': constants.GROUP, 'Комментарий': constants.COMMENT}
-    logger.write(new_contact)
+    new_contact = constants.CONTACT_DATA
+   
     
 
     with open(DATA_BASE, mode='a', newline='', encoding='utf-8') as csv_file:
-        field_names = ['Имя', 'Фамилия', 'Телефон', 'Группа', 'Комментарий']
+       
+        field_names = constants.CONTACT_DATA.keys()
 
         writer = csv.DictWriter(csv_file, fieldnames=field_names, dialect='excel', restval='', delimiter='|')
         writer.writerow(new_contact)
@@ -75,17 +74,11 @@ def Delete_contact(update):
             writer = csv.DictWriter(temp_file, fieldnames=reader.fieldnames, dialect='excel', restval='', delimiter='|')
             writer.writeheader()
             writer.writerows(filter(lambda x: x.get('Телефон') not in data, reader))
-    logger.write_del(data)
+
     os.remove(DATA_BASE)
     os.rename('temp.csv',DATA_BASE)
     
     
-
-# def Print():
-#     # print(Delete_contact())
-#     print(Search_contact())
-
-# Print()
 
 
 
